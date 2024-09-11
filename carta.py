@@ -1,7 +1,7 @@
 import random
-
-class Carta:
-    def __init__(self, nombre,club, pais, habilidad):
+from abc import ABC
+class Carta(ABC):
+    def __init__(self, nombre,club, pais, habilidad=None):
         self._nombre = nombre
         self._club = club
         self._pais = pais
@@ -12,30 +12,46 @@ class Carta:
         self._defensa = 0
         self._pase = 0
         self._fisico = 0
+        self._quimica = 0
 
+    def get_quimica(self):
+        return self._quimica
+    
     def agregar_valores(self,min,max,suma,porcentaje):
-        if suma != None:
-            self._velocidad = random.randint(min, max) + suma
-            self._tiro = random.randint(min, max) + suma
-            self._regate = random.randint(min, max) + suma
-            self._defensa = random.randint(min, max) + suma
-            self._pase = random.randint(min, max) + suma
-            self._fisico = random.randint(min, max) + suma
+            self._velocidad = self.__porcentaje(min,max,suma,porcentaje)
+            self._tiro = self.__porcentaje(min,max,suma,porcentaje)
+            self._regate = self.__porcentaje(min,max,suma,porcentaje)
+            self._defensa = self.__porcentaje(min,max,suma,porcentaje)
+            self._pase = self.__porcentaje(min,max,suma,porcentaje)
+            self._fisico = self.__porcentaje(min,max,suma,porcentaje)
+            
+    
+    def __porcentaje(self,min,max,suma,porcentaje):
         
-        if porcentaje != None:
-            self._velocidad = (random.randint(min, max) + (random.randint(1, 2)) * porcentaje)
-            self._tiro = (random.randint(min, max) + (random.randint(1, 2)) * porcentaje)
-            self._regate = (random.randint(min, max) + (random.randint(1, 2)) * porcentaje)
-            self._defensa = (random.randint(min, max) + (random.randint(1, 2)) * porcentaje)
-            self._pase = (random.randint(min, max) + (random.randint(1, 2)) * porcentaje)
-            self._fisico = (random.randint(min, max) + (random.randint(1, 2)) * porcentaje)
+        if suma != 0 and suma != None:
+            total = random.randint(min, max)
+            return total + suma
+        
+        if porcentaje != 0 and porcentaje != None:
+            total = random.randint(min, max)
+            return total + (total * porcentaje)  
 
+    def calcular_quimica(self,pais_favorito,equipo_favorito):
+        if self._pais == pais_favorito and self._club == equipo_favorito:
+            return 100
+        elif self._pais == pais_favorito or self._club == equipo_favorito:
+            return 80
+        else:
+            return 0 
+        
+        
     def imprimir(self):
         print(self._club)
         print("")
-        print("Habilidad especial:")
-        print(self._habilidad)
-        print("")
+        if self._habilidad != None:
+            print("Habilidad especial:")
+            print(self._habilidad)
+            print("")
         print(self._nombre)
         print(self._pais)
         print(f"Velocidad: {self._velocidad} Tiro: {self._tiro}")

@@ -6,5 +6,7 @@ class Carta_especial(Carta):
         super().__init__(nombre, club, pais, habilidad)
         
     def asignar_valores(self):
-        super().agregar_valores(89, 98.8, None, 0.02)
-        
+        super().agregar_valores(89, 99, 0, 0.02)
+    
+    def calcular_quimica(self,pais_favorito,equipo_favorito):
+        return 100
